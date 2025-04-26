@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skor & Penjelasan Sejarah</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-blue-700 text-white p-4 text-center text-2xl font-bold">
+  Skor Akhir dan Pembelajaran Sejarah
+</header>
+
+<main class="p-6">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow space-y-6">
+    <h2 class="text-xl font-bold">Skor Kamu:</h2>
+    <div id="final-score" class="text-3xl text-center my-4 text-green-600"></div>
+
+    <h2 class="text-xl font-bold mt-8">Penjelasan Sejarah:</h2>
+    <ul id="explanations-list" class="list-disc list-inside space-y-2">
+      <!-- Penjelasan akan dimunculkan di sini -->
+    </ul>
+
+    <div class="text-center mt-10">
+      <a href="game.html" class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-6 rounded">Main Lagi</a>
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const score = localStorage.getItem('finalScore') || 0;
+  const explanations = JSON.parse(localStorage.getItem('explanations')) || [];
+
+  document.getElementById('final-score').innerText = `${score} Poin`;
+
+  const list = document.getElementById('explanations-list');
+  explanations.forEach((exp, index) => {
+    const li = document.createElement('li');
+    li.innerText = `${index + 1}. ${exp}`;
+    list.appendChild(li);
+  });
+});
+</script>
+
+</body>
+</html>
