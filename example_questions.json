@@ -1,0 +1,20 @@
+[
+  {
+    "question": "Siapa proklamator kemerdekaan Indonesia?",
+    "answer": "Soekarno dan Hatta",
+    "explanation": "Soekarno dan Mohammad Hatta memproklamasikan kemerdekaan Indonesia pada 17 Agustus 1945.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Proklamasi.jpg/640px-Proklamasi.jpg"
+  },
+  {
+    "question": "Peristiwa penting apa yang terjadi pada tanggal 10 November 1945?",
+    "answer": "Pertempuran Surabaya",
+    "explanation": "Pertempuran Surabaya adalah salah satu pertempuran terbesar dalam sejarah Revolusi Nasional Indonesia melawan Inggris dan Belanda.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Battle_of_Surabaya.jpg/640px-Battle_of_Surabaya.jpg"
+  },
+  {
+    "question": "Apa nama teks penting yang dibacakan Soekarno dan Hatta saat memproklamasikan kemerdekaan?",
+    "answer": "Teks Proklamasi",
+    "explanation": "Teks Proklamasi adalah deklarasi resmi kemerdekaan Indonesia dari penjajahan asing.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Teks_Proklamasi_Asli.jpg/640px-Teks_Proklamasi_Asli.jpg"
+  }
+]
