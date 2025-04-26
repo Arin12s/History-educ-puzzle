@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Puzzle Sejarah</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-purple-600 text-white p-4 text-center text-2xl font-bold">
+  Mainkan Puzzle Sejarah
+</header>
+
+<main class="p-6">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow space-y-6">
+    <div id="game-area" class="text-center space-y-4">
+      <img id="puzzle-image" src="" alt="Puzzle Gambar" class="w-full rounded">
+      <h2 id="puzzle-question" class="text-xl font-bold"></h2>
+      <input type="text" id="user-answer" placeholder="Jawabanmu..." class="w-full p-2 border rounded">
+      <button onclick="checkAnswer()" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">Kirim Jawaban</button>
+      <div id="feedback" class="mt-4 text-lg font-bold"></div>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center">
+    <a href="leaderboard.html" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-6 rounded">Lihat Skor & Penjelasan</a>
+  </div>
+</main>
+
+<script>
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestions() {
+  fetch('example_questions.json')
+    .then(response => response.json())
+    .then(data => {
+      questions = data;
+      showQuestion();
+    });
+}
+
+function showQuestion() {
+  if (currentQuestion < questions.length) {
+    document.getElementById('puzzle-image').src = questions[currentQuestion].image;
+    document.getElementById('puzzle-question').innerText = questions[currentQuestion].question;
+    document.getElementById('user-answer').value = '';
+    document.getElementById('feedback').innerText = '';
+  } else {
+    localStorage.setItem('finalScore', score);
+    localStorage.setItem('explanations', JSON.stringify(questions.map(q => q.explanation)));
+    window.location.href = 'leaderboard.html';
+  }
+}
+
+function checkAnswer() {
+  const userAnswer = document.getElementById('user-answer').value.trim().toLowerCase();
+  const correctAnswer = questions[currentQuestion].answer.trim().toLowerCase();
+
+  if (userAnswer === correctAnswer) {
+    document.getElementById('feedback').innerText = 'Benar!';
+    document.getElementById('feedback').classList.add('text-green-600');
+    score += 10;
+  } else {
+    document.getElementById('feedback').innerText = `Salah! Jawaban benar: ${questions[currentQuestion].answer}`;
+    document.getElementById('feedback').classList.add('text-red-600');
+  }
+
+  setTimeout(() => {
+    currentQuestion++;
+    showQuestion();
+  }, 1500);
+}
+
+loadQuestions();
+</script>
+
+</body>
+</html>
