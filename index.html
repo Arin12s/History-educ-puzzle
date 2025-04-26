@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Guru - Puzzle Sejarah</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-blue-600 text-white p-4 text-center text-2xl font-bold">
+  Puzzle Sejarah 2
+</header>
+
+<main class="p-6">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-bold mb-4">Buat Soal Baru</h2>
+    <form id="form-add-question" class="space-y-4">
+      <input type="text" id="question" placeholder="Tulis pertanyaan..." class="w-full p-2 border rounded">
+      <input type="text" id="answer" placeholder="Tulis jawaban..." class="w-full p-2 border rounded">
+      <textarea id="explanation" placeholder="Tulis penjelasan sejarah..." class="w-full p-2 border rounded"></textarea>
+      <input type="file" id="image" class="w-full">
+      <button type="submit" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">Tambah Soal</button>
+    </form>
+
+    <h2 class="text-xl font-bold mt-10 mb-4">Daftar Soal</h2>
+    <ul id="question-list" class="space-y-2">
+      <!-- Soal akan muncul di sini -->
+    </ul>
+
+    <div class="mt-6 flex gap-4">
+      <button id="export-json" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Export Soal</button>
+      <input type="file" id="import-file" class="hidden">
+      <label for="import-file" class="bg-yellow-500 hover:bg-yellow-700 text-white py-2 px-4 rounded cursor-pointer">Import Soal</label>
+      <a href="game.html" class="bg-purple-600 hover:bg-purple-800 text-white py-2 px-4 rounded">Mulai Game</a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const form = document.getElementById('form-add-question');
+const questionList = document.getElementById('question-list');
+let questions = [];
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const question = document.getElementById('question').value;
+  const answer = document.getElementById('answer').value;
+  const explanation = document.getElementById('explanation').value;
+  const image = document.getElementById('image').files[0];
+
+  if (question && answer && explanation && image) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      questions.push({
+        question,
+        answer,
+        explanation,
+        image: evt.target.result
+      });
+      renderQuestions();
+      form.reset();
+    };
+    reader.readAsDataURL(image);
+  } else {
+    alert('Semua field wajib diisi!');
+  }
+});
+
+function renderQuestions() {
+  questionList.innerHTML = '';
+  questions.forEach((q, i) => {
+    const li = document.createElement('li');
+    li.className = 'border p-2 rounded flex justify-between items-center';
+    li.innerHTML = `<span>${i + 1}. ${q.question}</span>`;
+    questionList.appendChild(li);
+  });
+}
+
+document.getElementById('export-json').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(questions)], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'questions.json';
+  link.click();
+});
+
+document.getElementById('import-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      questions = JSON.parse(evt.target.result);
+      renderQuestions();
+    };
+    reader.readAsText(file);
+  }
+});
+</script>
+
+</body>
+</html>
